@@ -14,28 +14,32 @@ And i'm using multiple meeting applications for online meetings with customers.
 
 Had an discusion with my manager and collegeas, and we came to a result, would it be nice that we have a script that search on your device for an active online meeting (Zoom, WebEx, Microsoft Teams & Slack to start with), and control HueLights via API base on my result.
 
-## Set it up
-All you need is an Hue Bridge and a Hue Light.
+## Set up
+All we need for this setup is an Hue Bridge and a Hue Light.
+An Browser, text editor and Apple Automator.app
 
-## Create a API user in Bridge 
-_(source https://developers.meethue.com/develop/get-started-2/)_
+**Create a API user in Bridge** [link to source](https://developers.meethue.com/develop/get-started-2/)
+First we are going to search for the Hue Bridge in your network
+for the lookup in your network op this link in your browser https://discovery.meethue.com/
 
-first we are going to search for the Hue Bridge in your network
-First lookup in your network your Hue Bridge
-https://discovery.meethue.com/
- Result example: [{"id":"001234ddse28c6be","internalipaddress":"10.0.0.12"}]
- 
- Use the internal API Debugger to create an API User
- Go to https://internal-ipaddress/debug/clip.html
+Result example:
+```html
+[{"id":"001234ddse28c6be","internalipaddress":"10.0.0.12"}]
+```
+
+Use the internal API Debugger to create an API User
+Go to https://internal-ipaddress/debug/clip.html
 
  We need to use the randomly generated username that the bridge creates for you. 
  Fill in the info like below (you can use your own name) in the API Debugger and press the POST button.
 
- URL: /api
- Message Body:
- {"devicetype":"my_hue_app#Mischa"}
- 
- When you press the POST button you should get back an error message letting you know that you have to press the link button
+```json
+URL: /api
+Message Body:
+{"devicetype":"my_hue_app#mvdbent"}
+```
+
+When you press the POST button you should get back an error message letting you know that you have to press the link button
 
  [
 	{
