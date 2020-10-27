@@ -1,4 +1,7 @@
 # onAirScanner
+
+https://github.com/mvdbent/onAirScanner/blob/main/OnAir.png
+
 Look for an online meeting, and control via API HueLights
 
 how to create a API user in Bridge (source https://developers.meethue.com/develop/get-started-2/)
