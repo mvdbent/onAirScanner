@@ -14,16 +14,15 @@ And i'm using multiple meeting applications for online meetings with customers.
 
 Had an discusion with my manager and collegeas, and we came to a result, would it be nice that we have a script that search on your device for an active online meeting (Zoom, WebEx, Microsoft Teams & Slack to start with), and control HueLights via API base on my result.
 
-# Set it all up
+## Set it up
 All you need is an Hue Bridge and a Hue Light.
 
-## Create a API user in Bridge _(source https://developers.meethue.com/develop/get-started-2/)_
+## Create a API user in Bridge 
+_(source https://developers.meethue.com/develop/get-started-2/)_
+
 first we are going to search for the Hue Bridge in your network
-
-
- 
- First lookup in your network your Hue Bridge
- https://discovery.meethue.com/
+First lookup in your network your Hue Bridge
+https://discovery.meethue.com/
  Result example: [{"id":"001234ddse28c6be","internalipaddress":"10.0.0.12"}]
  
  Use the internal API Debugger to create an API User
