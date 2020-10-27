@@ -1,17 +1,20 @@
 #!/bin/bash
 
 # Global variables
-hueBridge='10.0.1.111'
-hueApiHash='nCNqHs1PP780pE-UsoYPR-CoPw85knTqvvNmvXB6'
+hueBridge='ipaddress'
+hueApiHash='###############' 
 hueBaseUrl="http://${hueBridge}/api/${hueApiHash}"
-hueLight="1"
+hueLight="##" ##ID 1, 2, 3
 localIP=$(ifconfig | grep "inet " | grep -Fv 127.0.0.1 | awk '{print $2}')
 
+# Running Meetings
 zoomMeeting=$(lsof -anP -i4 -sTCP:LISTEN | grep zoom.us)
 microsoftTeams=$(lsof -anP -i4 -sTCP:LISTEN | grep Microsoft | grep ${localIP}:'*')
 ciscoWebEX=$(lsof -anP -i4 -sTCP:LISTEN | grep Meeting)
 slack=$(lsof -anP -i4 -sTCP:LISTEN | grep 'Slack*')
+faceTime=$(lsof -anP -i4 -sTCP:LISTEN | grep avconfere)
 
+#API Functions
 function turnOff {
 	# Turn Off
 	curl -s -X PUT -H "Content-Type: application/json" -d '{"on":false}' "${hueBaseUrl}/lights/${hueLight}/state"
@@ -27,8 +30,13 @@ function TurnOnGreen {
 	curl -s -X PUT -H "Content-Type: application/json" -d '{"on":true,"bri":'254',"xy":['0.2151','0.7106']}' "${hueBaseUrl}/lights/${hueLight}/state"
 }
 
+#########################################################################################
+#########################################################################################
+# Core Script Logic - Don't Change Without Testing
+#########################################################################################
+#########################################################################################
 
-if [[ -n "$zoomMeeting" || -n "$microsoftTeams" || -n "$ciscoWebEX"  || -n "$slack" ]];then
+if [[ -n "$zoomMeeting" || -n "$microsoftTeams" || -n "$ciscoWebEX"  || -n "$slack" || -n "$faceTime" ]];then
 	echo "Meeting running"
 	TurnOnRed
 	else
@@ -37,63 +45,4 @@ if [[ -n "$zoomMeeting" || -n "$microsoftTeams" || -n "$ciscoWebEX"  || -n "$sla
 	TurnOnGreen
 fi
 
-
-### Loop through
-#for i in "${onlineMeetings[@]}"
-#do
-#	: 
-#	if [ -z "$i" ]; then
-#		echo "There is no meeting running"
-#		turnOff
-#	else 
-#		echo "There is an meeting running"
-#		TurnOnRed
-#	fi
-#done
-
-#if [ -n "$zoomMeeting" ];then
-#	echo "There is an meeting 1 running"
-#	TurnOnRed
-#elif [ -n "$microsoftTeams" ];then
-#	echo "There is an meeting 2 running"
-#	TurnOnRed
-#elif [ -n "$ciscoWebEX"];then
-#	echo "There is an meeting 3 running"
-#	TurnOnRed
-#else
-#	echo "There is no Zoom meeting running"
-#	turnOff
-#fi
-
-
-#if [ -z "$zoomMeeting" ];then
-#	echo "There is no Zoom meeting running"
-#	turnOff
-#	else
-#		echo "There is an Zoom meeting running"
-#		TurnOnRed
-#fi
-#
-#if [ -z "$microsoftTeams" ];then
-#	echo "There is no Teams meeting running"
-#	turnOff
-#	else
-#		echo "There is an Teams meeting running"
-#		TurnOnRed
-#fi
-#
-#if [ -z "$ciscoWebEX" ];then
-#	echo "There is no Cisco WebEX meeting running"
-#	turnOff
-#	else
-#		echo "There is an Cisco WebEX meeting running"
-#		TurnOnRed
-#fi
-#
-#if [ -z "$slack" ];then
-#	echo "There is no slack meeting running"
-#	turnOff
-#	else
-#		echo "There is an slack meeting running"
-#		TurnOnRed
-#fi
+sleep 10
