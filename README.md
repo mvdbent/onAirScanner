@@ -2,6 +2,10 @@
 # onAirScanner
 <img src="https://github.com/mvdbent/onAirScanner/blob/main/OnAir.png" width="250">
 
+![GitHub Releases](https://img.shields.io/github/downloads/mvdbent/onAirScanner/latest/total?color=blue&style=flat-square)
+![GitHub](https://img.shields.io/github/license/mvdbent/onAirScanner?color=red&style=flat-square)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/mvdbent/onAirScanner?style=flat-square)
+
 _This script is in the "It's working for me, but want to make it better" stage._
 
 While WFH, we are in a lot of meetings, and sometimes your roommates or family doens't know this and just walk into your room, because they forget to knock on the door or just walk into your room.
