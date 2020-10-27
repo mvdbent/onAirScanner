@@ -8,12 +8,16 @@ _This script is in the "It's working for me, but want to make it better" stage._
 while WFH, we are in a lot of meetings, and sometimes your roommates or family doens't know this and just walk into your room, because they forget to knock on the door or just walk into your room.
 So setting up a light to show them that you are busy, in a meeting is a great sollution.
 There are several solution out there that can do this. for example: Connect your agenda to IFTTT kind of services, create an action with homekit or homebridge to  turn light on with color red when you are in a meeting, and green when you're avalable.
-Or just buy a button that turns the light on or off.
+Or just buy a button that turns the light on or off. (and try not to forget to push the button, and i always forget)
 
 In my case i couldn't connect my agenda to services like IFTTT, our send an webhook event from my meeting application, when a meeting has started or ended.
+And i'm using multiple meeting applications for online meetings with customers.
+
+Had an discusion with my manager and collegeas, and we came to a result, would it be nice that we have a script that search on your device for an active online meeting (Zoom, WebEx, Microsoft Teams & Slack to start with), and control HueLights via API base on my result.
+
+# Requirements
 
 
-Look for an online meeting, and control via API HueLights
 
 # how to
 how to create a API user in Bridge (source https://developers.meethue.com/develop/get-started-2/)
