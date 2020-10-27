@@ -19,29 +19,32 @@ All we need for this setup is an Hue Bridge and a Hue Light.
 An Browser, text editor and Apple Automator.app
 
 **Create a API user in Bridge** [link to source](https://developers.meethue.com/develop/get-started-2/)
+
 First we are going to search for the Hue Bridge in your network
 for the lookup in your network op this link in your browser https://discovery.meethue.com/
 
 Result example:
 ```html
-[{"id":"001234ddse28c6be","internalipaddress":"10.0.0.12"}]
+[{"id":"001234ddse27c6be","internalipaddress":"192.168.0.12"}]
 ```
 
-Use the internal API Debugger to create an API User
-Go to https://internal-ipaddress/debug/clip.html
+Use the internal API Debugger to create an API User, go to https://192.168.0.12/debug/clip.html
+Change #internalipaddress into the internalipaddress you just found.
 
- We need to use the randomly generated username that the bridge creates for you. 
- Fill in the info like below (you can use your own name) in the API Debugger and press the POST button.
+We the following command in the API Debugger tool, we are generating a API user . 
+Fill in the info like below (you can use your own name) in the API Debugger and press the POST button.
 
-```json
+```html
 URL: /api
 Message Body:
-{"devicetype":"my_hue_app#mvdbent"}
+{"devicetype":"my_hue_app#username"}
 ```
 
 When you press the POST button you should get back an error message letting you know that you have to press the link button
 
- [
+Result example:
+```html
+[
 	{
 		"error": {
 			"type": 101,
@@ -50,24 +53,114 @@ When you press the POST button you should get back an error message letting you 
 		}
 	}
 ]
- 
- Now press the button on the bridge and then press the POST button again and you should get a success response like below.
+``` 
+Now press the button on the bridge and then press the POST button again and you should get a success response like below.
 
+Result example:
+```html
 [
 	{
 		"success": {
-			"username": "FIAqb-45tKaLBVzXKscihomProgvhUkRko59TAuV"
+			"username": "FIAqb-53KaLBVzXKscihomProgvhUkRko59TAuV"
 		}
 	}
 ]
+```
 
- Now we enabled a API user where we can authenticate with the Hue Bridge to communicate
+We enabled a API user where we can authenticate with the Hue Bridge for communication.
+Please write down the Hue API Hash.
 
- We can test doing the following
+We can test doing the following
 
- URL: https://10.0.1.111/api/FIAqb-45tKaLBVzXKscihomProgvhUkRko59TAuV
+```html
+URL: https://192.168.0.12/api/FIAqb-53KaLBVzXKscihomProgvhUkRko59TAuV
+Message Body:
+```
 
- When you press the POST button you should get back a list of devices that are connected to the bridge
+When you press the GET button you should get back a list of devices that are connected to the bridge
 
- in this script i'm testing on 1 light in my case ID "1"
+Result example:
+```html
+{
+	"lights": {
+		"1": {
+			"state": {
+				"on": true,
+				"bri": 254,
+				"hue": 25600,
+				"sat": 254,
+				"effect": "none",
+				"xy": [
+					0.2151,
+					0.7106
+				],
+				"alert": "lselect",
+				"colormode": "xy",
+				"mode": "homeautomation",
+				"reachable": true
+			},
+			"swupdate": {
+				"state": "noupdates",
+				"lastinstall": "2018-12-12T19:06:42"
+			},
+			"type": "Color light",
+			"name": "Hue bloom 1",
+			"modelid": "LLC011",
+			"manufacturername": "Signify Netherlands B.V.",
+			"productname": "Hue bloom",
+			"capabilities": {
+				"certified": true,
+				"control": {
+					"mindimlevel": 10000,
+					"maxlumen": 120,
+					"colorgamuttype": "A",
+					"colorgamut": [
+						[
+							0.704,
+							0.296
+						],
+						[
+							0.2151,
+							0.7106
+						],
+						[
+							0.138,
+							0.08
+						]
+					]
+				},
+				"streaming": {
+					"renderer": true,
+					"proxy": false
+				}
+			},
+			"config": {
+				"archetype": "huebloom",
+				"function": "decorative",
+				"direction": "upwards",
+				"startup": {
+					"mode": "safety",
+					"configured": true
+				}
+			},
+			"uniqueid": "00:11:22:01:00:1c:4e:ec-0b",
+			"swversion": "5.127.1.26581"
+		},
+	}
+}
+```
+
+For testing we are going to use light ID "1"
+
+we have all the Global variables we need to fill in in the script
+
+```zsh
+# Global variables
+hueBridge='192.168.0.12'
+hueApiHash='FIAqb-53KaLBVzXKscihomProgvhUkRko59TAuV'
+hueBaseUrl="http://${hueBridge}/api/${hueApiHash}"
+hueLight="1"
+```
+
+## Scan for running meetings
 
