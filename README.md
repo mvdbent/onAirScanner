@@ -6,17 +6,22 @@
 ![GitHub](https://img.shields.io/github/license/mvdbent/onAirScanner?color=red&style=flat-square)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/mvdbent/onAirScanner?style=flat-square)
 
-_This script is in the "It's working for me, but want to make it better" stage._
+_**Current state of this scripts is:** "Working for me, but let's make this better" stage._
 
-While WFH, we are in a lot of meetings, and sometimes your roommates or family doens't know this and just walk into your room, because they forget to knock on the door or just walk into your room.
-So setting up a light to show them that you are busy, in a meeting is a great sollution.
-There are several solution out there that can do this. for example: Connect your agenda to IFTTT kind of services, create an action with homekit or homebridge to  turn light on with color red when you are in a meeting, and green when you're avalable.
-Or just buy a button that turns the light on or off. (and try not to forget to push the button, and i always forget)
+While working from home, we all have a lot of meetings, and sometimes a family member or a roommate has no idea that you are in a meeting and they walk into the room without even a knock.
+Setting up a light to show when you are "ON AIR" or in a meeting is a great solution.
+There are several solutions out on the internet that can do this. Still, a lot of these solutions connect to your calendar via [IFTTT](https://ifttt.com) or [Zapier](https://zapier.com/) and then you need to create an action with homekit or homebridge to turn on a light with the colour red when in a meeting and green when it is safe to enter.
+Another straightforward way is to buy a button that turns a light on or off. (The trick is to try not to forget to push the button, I always forget)
 
-In my case i couldn't connect my agenda to services like IFTTT, our send an webhook event from my meeting application, when a meeting has started or ended.
-And i'm using multiple meeting applications for online meetings with customers.
+In this case, I couldn't connect my work calendar these 3rd party services or send a webhook event from an API, when a meeting has started or ended.
 
-Had an discusion with my manager and collegeas, and we came to a result, would it be nice that we have a script that search on your device for an active online meeting (Zoom, WebEx, Microsoft Teams & Slack to start with), and control HueLights via API base on my result.
+Also, another challenge is that I am using multiple meeting applications (Zoom, WebEx, Microsoft Teams, Slack, etc.), and each application has its way of doing things.
+
+Then when discussing with my manager and colleagues,  I came up with an idea to have a script that monitors your mac for an active online meeting.
+
+(**When the camera and mic are on!! As in full active participation, not just listing in**) 
+
+Once a meeting found, it can then control the HueLights via API.
 
 ## Set up
 All we need for this setup is:
@@ -29,8 +34,7 @@ Apple Automator.app
 
 **Create a API user in Bridge** [link to source](https://developers.meethue.com/develop/get-started-2/)
 
-First we are going to search for the Hue Bridge in your network
-for the lookup in your network op this link in your browser https://discovery.meethue.com/
+First we need to search for the Hue Bridge on your network. To lookup on your network use the following link: https://discovery.meethue.com/
 
 **Result example:**
 ```html
@@ -76,10 +80,10 @@ Now press the button on the bridge and then press the `POST` button again and yo
 ]
 ```
 
-We enabled a API user where we can authenticate with the Hue Bridge for communication.
+We now have enabled an API user and now we can authenticate with the Hue Bridge for communication.
 Please write down the Hue API Hash.
 
-We can test doing the following
+We can test with the following:
 
 ```html
 URL: https://10.0.1.111/api/FIAqb-53KaLBVzXKscihomProgvhUkRko59TAuV
@@ -159,12 +163,13 @@ When you press the `GET` button you should get back a list of devices that are c
 }
 ```
 
-For testing we are going to use light ID "1"
+For testing we are going to use the light with the **ID "1"**
 
 ## Securely store Passwords into the macOS Keychain
 
-Why putting Passwords in cleartext in scripts, when we can use the macOS Keychain for securely store this for us.
-I added this to the script for (easy) adding a password into the macOS keychain, so that we can place a password into the shell environment without leaking it into a file.
+Why put cleartext passwords in scripts, when we can use the macOS Keychain to securely store this information for us.
+
+I added this easy way to the script, so we can have a placeholder for the password rather then leaking this password within the script.
 
 **How to**
 
@@ -218,14 +223,21 @@ hueApiHash=$(security find-generic-password -s "hueAPIHash" -w) #use your servic
 hueLight="1" #use your light ID that you wanna use
 ```
 
-## Scan for running meetings
-The challenge is "How do we know when we are in a meeting, (even when we have turned off the Camera and/or microfone)
-We could look for running process, but this doesn't mean you are in a meeting.
-The only thing that is always the case, is a open connection.
+## Scan for any Running Meetings
+### The Challenge
 
-Running `lsof` (List open files) command without any options will list all open files of your system that belongs to all active process.
-This process takes a while and you will get a full list, we don't need all this information. 
-We are going to narrow this down to internet related connections by adding `-i` to the command.
+_"How do we know when we are in a meeting"_ (even when we have turned off the Camera and/or mic)
+
+Our options are:
+- We could look for running process, but this doesn't mean you are in a meeting.
+- Hook our calendar up to a 3rd party service (can't do that)
+
+The only thing that seems to be content and reliable is if there is an open connection.
+
+Running lsof (List open files) command without any options will list all open files of your system that belongs to all active process.
+This process takes a while and you will get a full list of everything, but we don't need all this information.
+
+We are going to narrow this down to only internet related connections by adding -i to the command.
 
 **Example**
 ```bash
@@ -235,9 +247,11 @@ zoom.us   53231 mvdbent   48u  IPv4 0x64763030acb3165d      0t0  TCP 10.0.1.116:
 zoom.us   53231 mvdbent   51u  IPv4 0x64763030adc2b03d      0t0  TCP 10.0.1.116:55830->ec2-3-235-96-204.compute-1.amazonaws.com:https (ESTABLISHED)
 zoom.us   53231 mvdbent   56u  IPv4 0x64763030a88c4c7d      0t0  TCP 10.0.1.116:63978->149.137.8.183:https (ESTABLISHED)
 ```
-
-We add the `-a`option may be used to AND the selections, the `-n` to inhibits the conversion of network numbers to host names for network files and the `-P` inhibits the conversion of port numbers to port names for network files
-Inhibiting conversion may make lsof run faster.
+We now add the following options to the **lsof** command:
+- **-a** option ( can be used to ANDed the selections)
+- **-n** (inhibits the conversion of network numbers to host names for network files)
+- **-P** (inhibits the conversion of port numbers to port names for network files)
+We want to inhibit the output so **lsof** can give us results faster.
 
 **Example**
 ```bash
@@ -270,8 +284,9 @@ So i did a couple of test, ended the meeting, UDP connections where gone, starte
 Turned of my Camera and Microphone, and the UDP connections where still there.
 No we now where to look for when it comes to Zoom.us. We only need to list the network files with TCP state LISTEN, with the `-sTCP:LISTEN` option
 
-Optional: 	We can specifies the IP version, IPv4 or IPv6 by adding `4` or `6`. 
-			In the script we specify IPv4.
+Now we know where to look for when it comes to Zoom.us
+We only need to list the network files with TCP state LISTEN, with the -sTCP:LISTEN option
+Optional: We can specifies the IP version, IPv4 or IPv6 by adding '4' or '6', in the script we specify IPv4.
 
 **Example**
 ```bash
