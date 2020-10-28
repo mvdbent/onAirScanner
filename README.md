@@ -182,8 +182,8 @@ Usage:
 security add-generic-password -s hueAPIHash -a HUEAPI -w FIAqb-53KaLBVzXKscihomProgvhUkRko59TAuV -T /usr/bin/security
 ```
 
-Now we securely store the Hue API Hash into the macOS Keychain. 
-we can use this command to fetch the Hue API Hash.
+Now we securely store the Hue API Hash into the macOS Keychain, and allowing the security binary to access this entry. 
+We can use the security command to fetch the Hue API Hash.
 
 ```bash
 security find-generic-password [-s service] -w 
@@ -191,6 +191,8 @@ Usage:
 -s service      Match service string
 -w              Display the password(only) for the item found
 ```
+
+We only need to provide the service
 
 **Example:**
 ```bash
@@ -202,14 +204,13 @@ FIAqb-53KaLBVzXKscihomProgvhUkRko59TAuV
 See the man page security in terminal for more options.
 
 
-we have all the Global variables we need to fill in in the script
+we have all the info we need to fill in the Global variables in the script
 
 ```bash
 # Global variables
-hueBridge='10.0.1.111'
-hueApiHash=$(security find-generic-password -s "hueAPIHash" -w) 
-hueBaseUrl="http://${hueBridge}/api/${hueApiHash}"
-hueLight="1"
+hueBridge='10.0.1.111' #use your internal ipaddress
+hueApiHash=$(security find-generic-password -s "hueAPIHash" -w) #use your service name by [-s "hueAPIHash"]
+hueLight="1" #use your light ID that you wanna use
 ```
 
 ## Scan for running meetings

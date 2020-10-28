@@ -1,14 +1,15 @@
 #!/bin/zsh
 
-# Add hueAPIHash in macOS Keychain, and add the security binary to "Always allow access by these applications:" list
+# Add hueAPIHash in your macOS Keychain, and add the security binary to "Always allow access by these applications:" list in this entry
 # security add-generic-password -s hueAPIHash -U -w ###################### -T /usr/bin/security
 
 # Global variables
-hueBridge="10.0.1.111"
-hueApiHash=$(security find-generic-password -s "hueAPIHash" -w) 
+hueBridge="10.0.1.111" #use your internal ipaddress
+hueApiHash=$(security find-generic-password -s "hueAPIHash" -w) #use your service name by [-s "hueAPIHash"]
 hueBaseUrl="http://${hueBridge}/api/${hueApiHash}"
-hueLight="1" ##ID 1, 2, 3
+hueLight="1" #use your light ID that you wanna use
 localIP=$(ifconfig | grep "inet " | grep -Fv 127.0.0.1 | awk '{print $2}')
+
 
 # Running Meetings
 zoomMeeting=$(lsof -anP -i4 -sTCP:LISTEN | grep zoom.us)
