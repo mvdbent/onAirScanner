@@ -27,9 +27,9 @@ Once a meeting found, it can then control the HueLights via API.
 **What i used for this setup:**
 - Philips Hue Bridge v2
 - Hue Bloom - Model: LLC011
-- Browser - Safari, Google Chrome
-- text editor - BBEdit, Coderunner
-- Apple Automator.app
+- Web Browser _(Safari, Google Chrome)_
+- Text Editor _(BBEdit, Coderunner)_
+- macOS Automator.app _(located in /Applications)_
 
 **Create a API user in Bridge** [link to source](https://developers.meethue.com/develop/get-started-2/)
 
@@ -80,9 +80,9 @@ Now press the button on the bridge and then press the `POST` button again and yo
 ```
 
 We now have enabled an API user and now we can authenticate with the Hue Bridge for communication.
-Please write down the Hue API Hash.
+Please write down the Hue API hash that you got.
 
-We can test with the following:
+Now we can test with the following command:
 
 ```html
 URL: https://10.0.1.111/api/FIAqb-53KaLBVzXKscihomProgvhUkRko59TAuV
