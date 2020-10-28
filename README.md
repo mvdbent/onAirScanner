@@ -231,7 +231,7 @@ zoom.us   53231 mischa   51u  IPv4 0x64763030adc2b03d      0t0  TCP 10.0.1.116:5
 zoom.us   53231 mischa   56u  IPv4 0x64763030a88c4c7d      0t0  TCP 10.0.1.116:63978->149.137.8.183:https (ESTABLISHED)
 ```
 
-We add the -a option may be used to AND the selections, the -n to inhibits the conversion of network numbers to host names for network files and the -P inhibits the conversion of port numbers to port names for network files
+We add the `<-a>`-a option may be used to AND the selections, the `<-n>`-n to inhibits the conversion of network numbers to host names for network files and the `<-P>`-P inhibits the conversion of port numbers to port names for network files
 Inhibiting conversion may make lsof run faster.
 
 **Example**
