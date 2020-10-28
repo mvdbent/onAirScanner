@@ -2,8 +2,7 @@
 # onAirScanner
 <img src="https://github.com/mvdbent/onAirScanner/blob/main/OnAir.png" width="250">
 
-
-![GitHub](https://img.shields.io/github/license/mvdbent/onAirScanner?color=red&style=flat-square)
+![GitHub](https://img.shields.io/github/license/mvdbent/onAirScanner)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/mvdbent/onAirScanner?style=flat-square)
 
 _**Current state of this scripts is:** "Working for me, but let's make this better" stage._
