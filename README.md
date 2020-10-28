@@ -193,8 +193,6 @@ security find-generic-password [-s service] -w
 Usage:
 -s service      Match service string
 -w              Display the password(only) for the item found
-
-security find-generic-password -s "hueAPIHash" -w
 ```
 
 *Example

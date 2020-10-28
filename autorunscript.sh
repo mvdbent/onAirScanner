@@ -1,10 +1,13 @@
 #!/bin/bash
 
+# Add hueAPIHash in macOS Keychain
+# security add-generic-password -s hueAPIHash -U -w #######################
+
 # Global variables
-hueBridge='ipaddress'
-hueApiHash='###############' 
+hueBridge='10.0.1.111'
+hueApiHash=$(security find-generic-password -s "hueAPIHash" -w) 
 hueBaseUrl="http://${hueBridge}/api/${hueApiHash}"
-hueLight="##" ##ID 1, 2, 3
+hueLight="1" ##ID 1, 2, 3
 localIP=$(ifconfig | grep "inet " | grep -Fv 127.0.0.1 | awk '{print $2}')
 
 # Running Meetings
@@ -14,7 +17,7 @@ ciscoWebEX=$(lsof -anP -i4 -sTCP:LISTEN | grep Meeting)
 slack=$(lsof -anP -i4 -sTCP:LISTEN | grep 'Slack*')
 faceTime=$(lsof -anP -i4 -sTCP:LISTEN | grep avconfere)
 
-#API Functions
+# API Functions
 function turnOff {
 	# Turn Off
 	curl -s -X PUT -H "Content-Type: application/json" -d '{"on":false}' "${hueBaseUrl}/lights/${hueLight}/state"
@@ -32,7 +35,7 @@ function TurnOnGreen {
 
 #########################################################################################
 #########################################################################################
-# Core Script Logic - Don't Change Without Testing
+# Core Script Logic
 #########################################################################################
 #########################################################################################
 
