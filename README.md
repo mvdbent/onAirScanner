@@ -2,7 +2,6 @@
 # onAirScanner
 <img src="https://github.com/mvdbent/onAirScanner/blob/main/OnAir.png" width="250">
 
-![GitHub Releases](https://img.shields.io/github/downloads/mvdbent/onAirScanner/latest/total?color=blue&style=flat-square)
 ![GitHub](https://img.shields.io/github/license/mvdbent/onAirScanner?color=red&style=flat-square)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/mvdbent/onAirScanner?style=flat-square)
 
@@ -24,12 +23,13 @@ Then when discussing with my manager and colleagues,  I came up with an idea to 
 Once a meeting found, it can then control the HueLights via API.
 
 ## Set up
-What i used for this setup.
-Philips Hue Bridge v2
-Hue Bloom - Model: LLC011
-Browser - Safari, Google Chrome
-text editor - BBEdit, Coderunner
-Apple Automator.app
+
+**What i used for this setup:**
+- Philips Hue Bridge v2
+- Hue Bloom - Model: LLC011
+- Browser - Safari, Google Chrome
+- text editor - BBEdit, Coderunner
+- Apple Automator.app
 
 **Create a API user in Bridge** [link to source](https://developers.meethue.com/develop/get-started-2/)
 
