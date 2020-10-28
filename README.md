@@ -156,6 +156,58 @@ Result example:
 
 For testing we are going to use light ID "1"
 
+# Securely store Passwords into the macOS Keychain
+
+Why putting Passwords in cleartext in scripts, when we can use the macOS Keychain for securely store this for us.
+I added this to the script for (easy) adding a password into the macOS keychain, so that we can place a password into the shell environment without leaking it into a file.
+
+---
+
+# Example usage
+
+## Store HUE API HASH into the macOS Keychain
+
+After creating the API user with the API Debugger tool, we received the Hue API Hash. 
+We are going to add the Hue API Hash into the macOS Keychain with the security command.
+For this command we are using to add an entry to the login keychain.
+
+```bash
+security add-generic-password [-s service] [-a account] [-w password]
+
+Usage: 
+-s service      Specify service name (required)
+-a account      Specify account name (required)
+-w password     Specify password to be added. Put at end of command to be prompted (recommended)
+```
+
+*Example
+```bash
+security add-generic-password -s hueAPIHash -a HUEAPI -w FIAqb-53KaLBVzXKscihomProgvhUkRko59TAuV
+```
+
+Now we securely store the Hue API Hash into the macOS Keychain. 
+we can use this command to fetch the Hue API Hash.
+
+```bash
+security find-generic-password [-s service] -w 
+Usage:
+-s service      Match service string
+-w              Display the password(only) for the item found
+
+security find-generic-password -s "hueAPIHash" -w
+```
+
+*Example
+```bash
+security find-generic-password -s "hueAPIHash" -w
+
+#RESULT
+FIAqb-53KaLBVzXKscihomProgvhUkRko59TAuV
+```
+
+See the man page security in terminal for more options.
+
+
 we have all the Global variables we need to fill in in the script
 
 ```zsh
