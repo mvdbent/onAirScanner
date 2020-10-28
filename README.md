@@ -55,7 +55,7 @@ Message Body:
 When you press the `POST` button you should get back an error message letting you know that you have to press the link button
 
 **Result example:**
-```html
+```json
 [
 	{
 		"error": {
@@ -69,7 +69,7 @@ When you press the `POST` button you should get back an error message letting yo
 Now press the button on the bridge and then press the `POST` button again and you should get a success response like below.
 
 **Result example:**
-```html
+```json
 [
 	{
 		"success": {
@@ -84,7 +84,7 @@ Please write down the Hue API hash that you got.
 
 Now we can test with the following command:
 
-```html
+```text
 URL: https://10.0.1.111/api/FIAqb-53KaLBVzXKscihomProgvhUkRko59TAuV
 Message Body:
 ```
@@ -92,7 +92,7 @@ Message Body:
 When you press the `GET` button you should get back a list of devices that are connected to the bridge
 
 **Result example:**
-```html
+```json
 {
 	"lights": {
 		"1": {
