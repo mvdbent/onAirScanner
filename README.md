@@ -165,20 +165,21 @@ I added this to the script for (easy) adding a password into the macOS keychain,
 
 After creating the API user with the API Debugger tool, we received the Hue API Hash. 
 We are going to add the Hue API Hash into the macOS Keychain with the security command.
-For this command we are using to add an entry to the login keychain.
+For this command we are using to add an entry to the login keychain and add the security binary to "Always allow access by these applications:" list in the Access Control preferences.
 
 ```bash
-security add-generic-password [-s service] [-a account] [-w password]
+security add-generic-password [-s service] [-a account] [-w password] -T [appPath]
 
 Usage: 
 -s service      Specify service name (required)
 -a account      Specify account name (required)
 -w password     Specify password to be added. Put at end of command to be prompted (recommended)
+-T appPath      Specify an application which may access this item (multiple -T options are allowed)
 ```
 
 **Example:**
 ```bash
-security add-generic-password -s hueAPIHash -a HUEAPI -w FIAqb-53KaLBVzXKscihomProgvhUkRko59TAuV
+security add-generic-password -s hueAPIHash -a HUEAPI -w FIAqb-53KaLBVzXKscihomProgvhUkRko59TAuV -T /usr/bin/security
 ```
 
 Now we securely store the Hue API Hash into the macOS Keychain. 

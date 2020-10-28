@@ -1,7 +1,7 @@
 #!/bin/zsh
 
-# Add hueAPIHash in macOS Keychain
-# security add-generic-password -s hueAPIHash -U -w ######################
+# Add hueAPIHash in macOS Keychain, and add the security binary to "Always allow access by these applications:" list
+# security add-generic-password -s hueAPIHash -U -w ###################### -T /usr/bin/security
 
 # Global variables
 hueBridge="10.0.1.111"
