@@ -24,13 +24,12 @@ Then when discussing with my manager and colleagues,  I came up with an idea to 
 Once a meeting found, it can then control the HueLights via API.
 
 ## Set up
-All we need for this setup is:
+What i used for this setup.
 Philips Hue Bridge v2
 Hue Bloom - Model: LLC011
 Browser - Safari, Google Chrome
 text editor - BBEdit, Coderunner
 Apple Automator.app
-
 
 **Create a API user in Bridge** [link to source](https://developers.meethue.com/develop/get-started-2/)
 
@@ -44,7 +43,7 @@ First we need to search for the Hue Bridge on your network. To lookup on your ne
 Use the internal API Debugger to create an API User, go to https://10.0.1.111/debug/clip.html
 Change #internalipaddress into the internalipaddress you just found.
 
-We the following command in the API Debugger tool, we are generating a API user . 
+We the following command in the API Debugger tool, we are generating a API user. 
 Fill in the info like below (you can use your own name) in the API Debugger and press the `POST` button.
 
 ```html
@@ -163,7 +162,7 @@ When you press the `GET` button you should get back a list of devices that are c
 }
 ```
 
-For testing we are going to use the light with the **ID "1"**
+For testing we are going to use the light with the **ID** `1`
 
 ## Securely store Passwords into the macOS Keychain
 
@@ -234,10 +233,10 @@ Our options are:
 
 The only thing that seems to be content and reliable is if there is an open connection.
 
-Running lsof (List open files) command without any options will list all open files of your system that belongs to all active process.
+Running `lsof` (List open files) command without any options will list all open files of your system that belongs to all active process.
 This process takes a while and you will get a full list of everything, but we don't need all this information.
 
-We are going to narrow this down to only internet related connections by adding -i to the command.
+We are going to narrow this down to only internet related connections by adding `-i` to the command.
 
 **Example**
 ```bash
@@ -247,11 +246,11 @@ zoom.us   53231 mvdbent   48u  IPv4 0x64763030acb3165d      0t0  TCP 10.0.1.116:
 zoom.us   53231 mvdbent   51u  IPv4 0x64763030adc2b03d      0t0  TCP 10.0.1.116:55830->ec2-3-235-96-204.compute-1.amazonaws.com:https (ESTABLISHED)
 zoom.us   53231 mvdbent   56u  IPv4 0x64763030a88c4c7d      0t0  TCP 10.0.1.116:63978->149.137.8.183:https (ESTABLISHED)
 ```
-We now add the following options to the **lsof** command:
+We now add the following options to the `lsof` command:
 - **-a** option ( can be used to ANDed the selections)
 - **-n** (inhibits the conversion of network numbers to host names for network files)
 - **-P** (inhibits the conversion of port numbers to port names for network files)
-We want to inhibit the output so **lsof** can give us results faster.
+We want to inhibit the output so `lsof` can give us results **faster**.
 
 **Example**
 ```bash
@@ -264,6 +263,7 @@ zoom.us   53231 mvdbent   56u  IPv4 0x64763030a88c4c7d      0t0  TCP 10.0.1.116:
 
 Now we found the active process that have a internet related connection, this still doesn't mean that we are in a meeting.
 This means that the Zoom.us app is opend and logged in with your account.
+After starting a meeting in zoom, we got extra connections based on UDP added.
 
 **Example**
 ```bash
@@ -279,14 +279,13 @@ zoom.us   53231 mvdbent   67u  IPv4 0x6476303084763a55      0t0  UDP *:55248
 zoom.us   53231 mvdbent   68u  IPv4 0x647630307bd37d3d      0t0  UDP *:53574
 ```
 
-After starting a meeting in zoom, we got extra connections based on UDP added.
 So i did a couple of test, ended the meeting, UDP connections where gone, started a new meeting, UDP connections are back turned. 
-Turned of my Camera and Microphone, and the UDP connections where still there.
-No we now where to look for when it comes to Zoom.us. We only need to list the network files with TCP state LISTEN, with the `-sTCP:LISTEN` option
+Turned off my Camera, then turned on, turned off the Microphone, and turned both off, the UDP connections where still there. **Awesome**
+No we now where to look for when it comes to Zoom.us. 
 
-Now we know where to look for when it comes to Zoom.us
-We only need to list the network files with TCP state LISTEN, with the -sTCP:LISTEN option
-Optional: We can specifies the IP version, IPv4 or IPv6 by adding '4' or '6', in the script we specify IPv4.
+We only need to list the network files with TCP state LISTEN, with the `-sTCP:LISTEN` option
+
+Optional: We can specifies the IP version, IPv4 or IPv6 by adding `4` or `6`, in the script we specify IPv4.
 
 **Example**
 ```bash
@@ -328,7 +327,9 @@ Only Microsoft Teams connected this to your localIP
 lsof -anP -i4 -sTCP:LISTEN | grep Microsoft | grep 10.0.1.116:'*'
 Microsoft 67439 mvdbent   45u  IPv4 0x647644287bdb076d      0t0  UDP 10.0.1.116:50023
 ```
-			
+This script will look for zoom.us, Microsoft Teams, Cisco WebEx, Slack and FaceTime online sessions.
+Want to have
+
 ## Create an Automator app that loops this script.
 
 Now we have a script that scan's for running meetings, calls, we want to loop this.
