@@ -156,16 +156,12 @@ Result example:
 
 For testing we are going to use light ID "1"
 
-# Securely store Passwords into the macOS Keychain
+## Securely store Passwords into the macOS Keychain
 
 Why putting Passwords in cleartext in scripts, when we can use the macOS Keychain for securely store this for us.
 I added this to the script for (easy) adding a password into the macOS keychain, so that we can place a password into the shell environment without leaking it into a file.
 
----
-
-# Example usage
-
-## Store HUE API HASH into the macOS Keychain
+**How to
 
 After creating the API user with the API Debugger tool, we received the Hue API Hash. 
 We are going to add the Hue API Hash into the macOS Keychain with the security command.
