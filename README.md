@@ -332,13 +332,14 @@ Want to have
 
 ## Create an Automator app that loops this script.
 
-Now we have a script that scan locale for running meetings, we want to have a easy way to start and stop this process.
-For now we use Apple Automator.app to create a application.
+Now we have a script that scans locally for any running meetings, so we need to create an easy way to start and stop this process.
 
-Create a New Document and choose type Application
+For this version we will use the **Apple Automator.app** to create an application.
+
+Create a `New Document` and choose type `Application`
 - Add Action `Run Shell Script`
-- Copy the contant of the `autorunscript.sh` and paste this into the `Run Shell Script` input field.
-- Add an other Action `Loop`
+- Copy the contents of `autorunscript.sh` and paste this into the `Run Shell Script` input field.
+- Add an other Action `Loop`.
 - Change `Ask to continue` to `Loop automatically` and Stop after 480 Minutes (8 hours)
 - Save the Application to your preferred location, you can add this to your `Dock` where you can easy start the App, or add the App to the `Login Items` to open automatically.
 
