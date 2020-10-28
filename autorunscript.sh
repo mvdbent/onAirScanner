@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Add hueAPIHash in macOS Keychain
-# security add-generic-password -s hueAPIHash -U -w #######################
+# security add-generic-password -s hueAPIHash -U -w ######################
 
 # Global variables
 hueBridge='10.0.1.111'

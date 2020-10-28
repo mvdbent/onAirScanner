@@ -27,12 +27,12 @@ An Browser, text editor and Apple Automator.app
 First we are going to search for the Hue Bridge in your network
 for the lookup in your network op this link in your browser https://discovery.meethue.com/
 
-Result example:
+**Result example:**
 ```html
-[{"id":"001234ddse27c6be","internalipaddress":"192.168.0.12"}]
+[{"id":"001234ddse27c6be","internalipaddress":"10.0.1.111"}]
 ```
 
-Use the internal API Debugger to create an API User, go to https://192.168.0.12/debug/clip.html
+Use the internal API Debugger to create an API User, go to https://10.0.1.111/debug/clip.html
 Change #internalipaddress into the internalipaddress you just found.
 
 We the following command in the API Debugger tool, we are generating a API user . 
@@ -46,7 +46,7 @@ Message Body:
 
 When you press the POST button you should get back an error message letting you know that you have to press the link button
 
-Result example:
+**Result example:**
 ```html
 [
 	{
@@ -60,7 +60,7 @@ Result example:
 ``` 
 Now press the button on the bridge and then press the POST button again and you should get a success response like below.
 
-Result example:
+**Result example:**
 ```html
 [
 	{
@@ -77,13 +77,13 @@ Please write down the Hue API Hash.
 We can test doing the following
 
 ```html
-URL: https://192.168.0.12/api/FIAqb-53KaLBVzXKscihomProgvhUkRko59TAuV
+URL: https://10.0.1.111/api/FIAqb-53KaLBVzXKscihomProgvhUkRko59TAuV
 Message Body:
 ```
 
 When you press the GET button you should get back a list of devices that are connected to the bridge
 
-Result example:
+**Result example:**
 ```html
 {
 	"lights": {
@@ -161,7 +161,7 @@ For testing we are going to use light ID "1"
 Why putting Passwords in cleartext in scripts, when we can use the macOS Keychain for securely store this for us.
 I added this to the script for (easy) adding a password into the macOS keychain, so that we can place a password into the shell environment without leaking it into a file.
 
-**How to
+**How to**
 
 After creating the API user with the API Debugger tool, we received the Hue API Hash. 
 We are going to add the Hue API Hash into the macOS Keychain with the security command.
@@ -176,7 +176,7 @@ Usage:
 -w password     Specify password to be added. Put at end of command to be prompted (recommended)
 ```
 
-*Example
+**Example:**
 ```bash
 security add-generic-password -s hueAPIHash -a HUEAPI -w FIAqb-53KaLBVzXKscihomProgvhUkRko59TAuV
 ```
@@ -191,10 +191,9 @@ Usage:
 -w              Display the password(only) for the item found
 ```
 
-*Example
+**Example:**
 ```bash
 security find-generic-password -s "hueAPIHash" -w
-
 #RESULT
 FIAqb-53KaLBVzXKscihomProgvhUkRko59TAuV
 ```
@@ -204,10 +203,10 @@ See the man page security in terminal for more options.
 
 we have all the Global variables we need to fill in in the script
 
-```zsh
+```bash
 # Global variables
-hueBridge='192.168.0.12'
-hueApiHash='FIAqb-53KaLBVzXKscihomProgvhUkRko59TAuV'
+hueBridge='10.0.1.111'
+hueApiHash=$(security find-generic-password -s "hueAPIHash" -w) 
 hueBaseUrl="http://${hueBridge}/api/${hueApiHash}"
 hueLight="1"
 ```
