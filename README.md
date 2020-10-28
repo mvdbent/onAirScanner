@@ -33,6 +33,8 @@ Once a meeting found, it can then control the HueLights via API.
 
 **Create a API user in Bridge** [link to source](https://developers.meethue.com/develop/get-started-2/)
 
+<a target="_blank" href="https://developers.meethue.com/develop/get-started-2/" title="link to source">link to source</a>
+
 First we need to search for the Hue Bridge on your network. To lookup on your network use the following link: https://discovery.meethue.com/
 
 **Result example:**
