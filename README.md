@@ -220,7 +220,7 @@ The only thing that is always the case, is a open connection.
 
 Running lsof (List open files) command without any options will list all open files of your system that belongs to all active process.
 This process takes a while and you will get a full list, we don't need all this information. 
-We are going to narrow this down to internet related connections by adding -i to the command.
+We are going to narrow this down to internet related connections by adding `-i` to the command.
 
 **Example**
 ```bash
@@ -231,7 +231,7 @@ zoom.us   53231 mischa   51u  IPv4 0x64763030adc2b03d      0t0  TCP 10.0.1.116:5
 zoom.us   53231 mischa   56u  IPv4 0x64763030a88c4c7d      0t0  TCP 10.0.1.116:63978->149.137.8.183:https (ESTABLISHED)
 ```
 
-We add the `<-a>`-a option may be used to AND the selections, the `<-n>`-n to inhibits the conversion of network numbers to host names for network files and the `<-P>`-P inhibits the conversion of port numbers to port names for network files
+We add the `-a`option may be used to AND the selections, the `-n` to inhibits the conversion of network numbers to host names for network files and the `-P>` inhibits the conversion of port numbers to port names for network files
 Inhibiting conversion may make lsof run faster.
 
 **Example**
@@ -265,7 +265,7 @@ So i did a couple of test, ended the meeting, UDP connections where gone, starte
 Turned of my Camera and Microphone, and the UDP connections where still there.
 No we now where to look for when it comes to Zoom.us. We only need to list the network files with TCP state LISTEN, with the -sTCP:LISTEN option
 
-Optional: 	We can specifies the IP version, IPv4 or IPv6 by adding '4' or '6'. 
+Optional: 	We can specifies the IP version, IPv4 or IPv6 by adding `4` or `6`. 
 			In the script we specify IPv4.
 
 Fun fact is that 
