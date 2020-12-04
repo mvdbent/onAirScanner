@@ -4,11 +4,12 @@
 # security add-generic-password -s hueAPIHash -U -w ###################### -T /usr/bin/security
 
 # Global variables
-hueBridge="10.0.1.111" #use your internal ipaddress
+# Scan your network for your hueBridge ipaddress
+hueBridge=$(curl --silent --fail "https://discovery.meethue.com/" | awk -F '"' "{ print \$8 }")
 hueApiHash=$(security find-generic-password -s "hueAPIHash" -w) #use your service name by [-s "hueAPIHash"]
 hueBaseUrl="http://${hueBridge}/api/${hueApiHash}"
 hueLight="1" #use your light ID that you wanna use
-localIP=$(ifconfig | grep "inet " | grep -Fv 127.0.0.1 | awk '{print $2}')
+localIP=$(ifconfig | grep "inet " | grep -Fv 127.0.0.1 | awk '{print $2}' | head -1)
 
 
 # Running Meetings
