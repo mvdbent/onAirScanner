@@ -13,11 +13,12 @@ localIP=$(ifconfig | grep "inet " | grep -Fv 127.0.0.1 | awk '{print $2}' | head
 
 
 # Running Meetings
-zoomMeeting=$(lsof -anP -i4 -sTCP:LISTEN | grep zoom.us)
+zoomMeeting=$(lsof -anP -i4 -sTCP:LISTEN | grep zoom.us | grep ${localIP}:'*')
 microsoftTeams=$(lsof -anP -i4 -sTCP:LISTEN | grep Microsoft | grep ${localIP}:'*')
 ciscoWebEX=$(lsof -anP -i4 -sTCP:LISTEN | grep Meeting)
-slack=$(lsof -anP -i4 -sTCP:LISTEN | grep 'Slack*')
-faceTime=$(lsof -anP -i4 -sTCP:LISTEN | grep avconfere)
+slack=$(lsof -anP -i4 -sTCP:LISTEN | grep 'Slack*' | grep 'UDP \*')
+faceTime=$(lsof -anP -i4 -sTCP:LISTEN | grep avconfere | grep ${localIP}:'*')
+discordMeeting=$(lsof -anP -i4 -sTCP:LISTEN | grep Discord | grep 'UDP \*')
 
 # API Functions
 function turnOff {
@@ -41,7 +42,7 @@ function TurnOnGreen {
 #########################################################################################
 #########################################################################################
 
-if [[ -n "$zoomMeeting" || -n "$microsoftTeams" || -n "$ciscoWebEX"  || -n "$slack" || -n "$faceTime" ]];then
+if [[ -n "$zoomMeeting" || -n "$microsoftTeams" || -n "$ciscoWebEX"  || -n "$slack" || -n "$faceTime" || -n "$discordMeeting"]];then
 	echo "Meeting running"
 	TurnOnRed
 	else
